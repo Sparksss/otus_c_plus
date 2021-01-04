@@ -1,12 +1,11 @@
 #include "lib.h"
 #include <iostream>
-using namespace std;
 
 // #include "./TutorialConfig.h"
 
 
 int main(int argc, char const *argv[]) {
-    cout << "build " << version();
-    cout << "Hello, World!";
+    std::cout << "build " << version() << std::endl;
+    std::cout << "Hello, World!" << std::endl;
     return 0;
 }
