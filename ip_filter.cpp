@@ -32,11 +32,27 @@ std::vector<int> castToInt(std::string line, char d)
     return o;
 }
 
+
+void showIpByCondition(std::vector<std::vector<int>> listOfIps, int indexOfList, int numberOfCondition) {
+  int sizeOfPool = listOfIps.size();
+  for(int index = 0; index < sizeOfPool; index++)
+  {
+   if(listOfIps[index][indexOfList] == numberOfCondition) 
+     {
+     for(int i = 0; i < 4; i++) 
+      {
+        std::cout << listOfIps[index][i] << '.';
+      }
+      std::cout << std::endl;
+     }
+  }
+}
+
 int main(int argc, char const *argv[]) 
 {
-    try 
-    {
-        std::vector<std::vector<int>> ip_pool;
+  try 
+  {
+     std::vector<std::vector<int>> ip_pool;
 
 //         const char *ips[37] = {
 // "113.162.145.156\t",
@@ -136,17 +152,7 @@ int main(int argc, char const *argv[])
             std::cout << std::endl;
         }
 
-        for(int index = 0; index < sizeOfPool; index++)
-        {
-            if(ip_pool[index][0] == 1) 
-            {
-                 for(int i = 0; i < 4; i++) 
-                {
-                    std::cout << ip_pool[index][i] << '.';
-                }
-                std::cout << std::endl;
-            }
-        }
+        showIpByCondition(ip_pool, 0, 1);
 
         for(int index = 0; index < sizeOfPool; index++)
         {
@@ -160,17 +166,7 @@ int main(int argc, char const *argv[])
             }
         }
 
-        for(int index = 0; index < sizeOfPool; index++)
-        {
-            if(ip_pool[index][0] == 46) 
-            {
-                 for(int i = 0; i < 4; i++) 
-                {
-                    std::cout << ip_pool[index][i] << '.';
-                }
-                std::cout << std::endl;
-            }
-        }
+        showIpByCondition(ip_pool, 0, 46);
 
     } 
     catch(const std::exception &e) 
