@@ -93,7 +93,7 @@ void showMessagePrintCondition() {
   std::cout << "<< print by condition >>" << std::endl;
 }
 
-int main(int argc, char const *argv[]) 
+int main() 
 {
   try 
   {
