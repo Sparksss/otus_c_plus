@@ -9,7 +9,7 @@ endif()
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
-configure_file(version.h.in version.h)
+configure_file(version.hpp.in version.hpp)
 
 # add executable
 add_executable(otus_cpp main.cpp)

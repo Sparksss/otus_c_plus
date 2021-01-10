@@ -1,6 +1,6 @@
 #include "lib.hpp"
 
-#include "version.h"
+#include "version.hpp"
 
 int version()
 {
