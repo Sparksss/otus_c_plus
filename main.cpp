@@ -4,7 +4,7 @@
 // #include "./TutorialConfig.h"
 
 
-int main(int argc, char const *argv[]) {
+int main() {
     std::cout << "build " << version() << std::endl;
     std::cout << "Hello, World!" << std::endl;
     return 0;
