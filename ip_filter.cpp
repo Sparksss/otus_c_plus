@@ -34,18 +34,63 @@ std::vector<int> castToInt(std::string line, char d)
 
 
 void showIpByCondition(std::vector<std::vector<int>> listOfIps, int indexOfList, int numberOfCondition) {
+  const int LAST_INDEX_OF_IP_PART = 3;
   int sizeOfPool = listOfIps.size();
+
   for(int index = 0; index < sizeOfPool; index++)
   {
    if(listOfIps[index][indexOfList] == numberOfCondition) 
      {
      for(int i = 0; i < 4; i++) 
       {
-        std::cout << listOfIps[index][i] << '.';
+        std::cout << listOfIps[index][i];
+        if(i != LAST_INDEX_OF_IP_PART) {
+            std::cout << '.';
+        }
       }
       std::cout << std::endl;
      }
   }
+}
+
+std::vector<std::vector<int>> selectionSort(std::vector<std::vector<int>> ip_pool) {
+
+    int sizeOfPool = ip_pool.size();
+    for(int startIndex = 0; startIndex < sizeOfPool - 1; startIndex++) 
+    {
+            
+        int biggestIndex = startIndex;
+         
+        for(int currentIndex = startIndex + 1; currentIndex < sizeOfPool; currentIndex++) 
+        {
+            if(ip_pool[currentIndex][0] > ip_pool[biggestIndex][0]) 
+            {
+                    biggestIndex = currentIndex;
+            }
+            else if(ip_pool[currentIndex][0] == ip_pool[biggestIndex][0]) 
+            {
+                for(int i = 1; i < 4; i++) 
+                {
+                    if(ip_pool[currentIndex][i] > ip_pool[biggestIndex][i]) 
+                    {
+                        biggestIndex = currentIndex;
+                        break;
+                    }
+                }
+
+            }
+                
+        }
+
+        std::swap(ip_pool[startIndex], ip_pool[biggestIndex]);
+
+    }
+    return ip_pool;
+}
+
+
+void showMessagePrintCondition() {
+  std::cout << "<< print by condition >>" << std::endl;
 }
 
 int main(int argc, char const *argv[]) 
@@ -101,6 +146,8 @@ int main(int argc, char const *argv[])
         {
 
             // std::string line = ips[i];
+            
+            // for end of input
             std::size_t found = line.find("end");
             if (found != std::string::npos) {
                 break;
@@ -113,46 +160,29 @@ int main(int argc, char const *argv[])
         }
 
 
+        ip_pool = selectionSort(ip_pool);
+
         int sizeOfPool = ip_pool.size();
-        for(int startIndex = 0; startIndex < sizeOfPool - 1; startIndex++) 
-        {
-            
-            int biggestIndex = startIndex;
-         
-            for(int currentIndex = startIndex + 1; currentIndex < sizeOfPool; currentIndex++) 
-            {
-                if(ip_pool[currentIndex][0] > ip_pool[biggestIndex][0]) {
-                     biggestIndex = currentIndex;
-                }
-                else if(ip_pool[currentIndex][0] == ip_pool[biggestIndex][0]) 
-                {
-                    for(int i = 1; i < 4; i++) 
-                    {
-                        if(ip_pool[currentIndex][i] > ip_pool[biggestIndex][i]) 
-                        {
-                            biggestIndex = currentIndex;
-                            break;
-                        }
-                    }
 
-                }
-                
-            }
-
-            std::swap(ip_pool[startIndex], ip_pool[biggestIndex]);
-
-        }
+        const int LAST_INDEX_OF_IP_PART = 3;
 
         for (int index = 0; index < sizeOfPool; ++index)
         {
             for(int i = 0; i < 4; i++) 
             {
-                std::cout << ip_pool[index][i] << '.';
+                std::cout << ip_pool[index][i];
+                if(i != LAST_INDEX_OF_IP_PART) {
+                    std::cout << '.';
+                }
             }
             std::cout << std::endl;
         }
 
+        showMessagePrintCondition();
+
         showIpByCondition(ip_pool, 0, 1);
+
+        showMessagePrintCondition();
 
         for(int index = 0; index < sizeOfPool; index++)
         {
@@ -160,11 +190,16 @@ int main(int argc, char const *argv[])
             {
                  for(int i = 0; i < 4; i++) 
                 {
-                    std::cout << ip_pool[index][i] << '.';
+                     std::cout << ip_pool[index][i];
+                    if(i != 4) {
+                        std::cout << '.';
+                    }
                 }
                 std::cout << std::endl;
             }
         }
+
+        showMessagePrintCondition();
 
         showIpByCondition(ip_pool, 0, 46);
 

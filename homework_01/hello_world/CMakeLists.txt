@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.18)
 
 # set project name
 if($ENV{TRAVIS_BUILD_NUMBER})
-    project(otus_cpp VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
+    project(helloworld VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 else()
-    project(otus_cpp VERSION 0.0.42)
+    project(helloworld VERSION 0.0.42)
 endif()
 
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
@@ -12,46 +12,46 @@ find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 configure_file(version.hpp.in version.hpp)
 
 # add executable
-add_executable(otus_cpp main.cpp)
-add_library(otus_cpp_lib lib.cpp)
+add_executable(helloworld_cli main.cpp)
+add_library(helloworld lib.cpp)
 add_executable(test_version test_version.cpp)
 
 # specify the c++ standart
-set_target_properties(otus_cpp otus_cpp_lib PROPERTIES 
+set_target_properties(helloworld_cli helloworld PROPERTIES 
     CXX_STANDARD 14 
     CXX_STANDARD_REQUIRED ON 
 )
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
-target_include_directories(otus_cpp PRIVATE "${CMAKE_BINARY_DIR}")
+target_include_directories(helloworld PRIVATE "${CMAKE_BINARY_DIR}")
 
 set_target_properties(test_version PROPERTIES
     COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
     INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
 )
 
-target_link_libraries(otus_cpp PRIVATE otus_cpp_lib)
+target_link_libraries(helloworld_cli PRIVATE helloworld)
 
 target_link_libraries(test_version
     ${Boost_LIBRARIES}
-    otus_cpp_lib
+    helloworld
 )
 
 if (MSVC)
-    target_compile_options(otus_cpp_lib PRIVATE
+    target_compile_options(helloworld PRIVATE
         /W4
     )
-    target_compile_options(otus_cpp PRIVATE
+    target_compile_options(helloworld_cli PRIVATE
         /W4
     )
     target_compile_options(test_version PRIVATE
         /W4
     )
 else ()
-    target_compile_options(otus_cpp_lib PRIVATE
+    target_compile_options(helloworld PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
-    target_compile_options(otus_cpp PRIVATE
+    target_compile_options(helloworld_cli PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
     target_compile_options(test_version PRIVATE
@@ -60,7 +60,7 @@ else ()
 endif()
 
 
-install(TARGETS otus_cpp RUNTIME DESTINATION bin)
+install(TARGETS helloworld_cli RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 
