@@ -4,8 +4,15 @@ before_script:
   - echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
   - sudo apt-get update -qq
 deploy:
+#deploy hello world
   - provider: script
     skip_cleanup: true
-    script: ./deploy_hello.sh && ./deploy_filter.sh
+    script: ./deploy_hello.sh && ./deploy_filter
+    on:
+       branch: develop
+  - provider: script
+# deploy filter
+    skip_cleanup: true
+    script: bash deploy_filter.sh
     on:
        branch: develop
