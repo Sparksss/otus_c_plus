@@ -4,18 +4,18 @@ before_script:
   - echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
   - sudo apt-get update -qq
 script:
-  - cd ./homework_01/hello_world
+  - cd ./homework_01/ip_filter/
+  - mkdir build/
+  - cd build/
+  - cmake ../
+  - cmake --build .
+  - cmake --build . --target package
+  - cd ./../../homework_01/hello_world
   - mkdir build
   - cd build/
   - cmake ../
   - cmake --build .
   - cmake --build . --target test
-  - cmake --build . --target package
-  - cd ../../ip_filter/
-  - mkdir build/
-  - cd build/
-  - cmake ../
-  - cmake --build .
   - cmake --build . --target package
 deploy:
   provider: script
