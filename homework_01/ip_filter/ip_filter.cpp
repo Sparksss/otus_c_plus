@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 std::string split(const std::string &str, char d)
 {
@@ -12,7 +13,7 @@ std::string split(const std::string &str, char d)
     return str.substr(start, stop - start);
 }
 
-std::vector<int> castToInt(std::string line, char d)
+std::vector<int> castToInt(std::string &line, char d)
 {
     std::vector<int> o;
 
@@ -33,59 +34,28 @@ std::vector<int> castToInt(std::string line, char d)
 }
 
 
-void showIpByCondition(std::vector<std::vector<int>> listOfIps, int indexOfList, int numberOfCondition) {
+void showIpByCondition(std::vector<std::vector<int>> &listOfIps, int indexOfList, int numberOfCondition) {
   const int LAST_INDEX_OF_IP_PART = 3;
   int sizeOfPool = listOfIps.size();
 
-  for(int index = 0; index < sizeOfPool; index++)
-  {
-   if(listOfIps[index][indexOfList] == numberOfCondition) 
-     {
-     for(int i = 0; i < 4; i++) 
-      {
-        std::cout << listOfIps[index][i];
-        if(i != LAST_INDEX_OF_IP_PART) {
-            std::cout << '.';
+    for(auto& ip : listOfIps) 
+    {
+        if(ip[indexOfList] == numberOfCondition) 
+        {
+            for(int i = 0; i < 4; i++) 
+            {
+                std::cout << ip[i];
+                if(i != LAST_INDEX_OF_IP_PART) {
+                std::cout << '.';
+            }
         }
-      }
-      std::cout << std::endl;
-     }
-  }
+        std::cout << std::endl;
+        }
+    }
 }
 
-std::vector<std::vector<int>> selectionSort(std::vector<std::vector<int>> ip_pool) {
-
-    int sizeOfPool = ip_pool.size();
-    for(int startIndex = 0; startIndex < sizeOfPool - 1; startIndex++) 
-    {
-            
-        int biggestIndex = startIndex;
-         
-        for(int currentIndex = startIndex + 1; currentIndex < sizeOfPool; currentIndex++) 
-        {
-            if(ip_pool[currentIndex][0] > ip_pool[biggestIndex][0]) 
-            {
-                    biggestIndex = currentIndex;
-            }
-            else if(ip_pool[currentIndex][0] == ip_pool[biggestIndex][0]) 
-            {
-                for(int i = 1; i < 4; i++) 
-                {
-                    if(ip_pool[currentIndex][i] > ip_pool[biggestIndex][i]) 
-                    {
-                        biggestIndex = currentIndex;
-                        break;
-                    }
-                }
-
-            }
-                
-        }
-
-        std::swap(ip_pool[startIndex], ip_pool[biggestIndex]);
-
-    }
-    return ip_pool;
+bool greaterThen(std::vector<int> a, std::vector<int> b) {
+    return a > b;
 }
 
 
@@ -147,11 +117,6 @@ int main()
 
             // std::string line = ips[i];
             
-            // for end of input
-            std::size_t found = line.find("end");
-            if (found != std::string::npos) {
-                break;
-            }   
             // slice characters until it's not next column(\t)
             std::string str = split(line, '\t');
 
@@ -160,17 +125,19 @@ int main()
         }
 
 
-        ip_pool = selectionSort(ip_pool);
+        // selectionSort(ip_pool);
+
+        std::sort(ip_pool.begin(), ip_pool.end(), greaterThen);
 
         int sizeOfPool = ip_pool.size();
 
         const int LAST_INDEX_OF_IP_PART = 3;
 
-        for (int index = 0; index < sizeOfPool; ++index)
-        {
+        for(auto& ip : ip_pool) {
+            
             for(int i = 0; i < 4; i++) 
             {
-                std::cout << ip_pool[index][i];
+                std::cout << ip[i];
                 if(i != LAST_INDEX_OF_IP_PART) {
                     std::cout << '.';
                 }
@@ -184,13 +151,12 @@ int main()
 
         showMessagePrintCondition();
 
-        for(int index = 0; index < sizeOfPool; index++)
-        {
-            if(ip_pool[index][0] == 46 && ip_pool[index][1] == 70) 
+        for(auto& ip : ip_pool) {
+            if(ip[0] == 46 && ip[1] == 70) 
             {
                  for(int i = 0; i < 4; i++) 
                 {
-                     std::cout << ip_pool[index][i];
+                     std::cout << ip[i];
                     if(i != 4) {
                         std::cout << '.';
                     }
