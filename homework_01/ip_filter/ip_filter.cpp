@@ -36,7 +36,6 @@ std::vector<int> castToInt(std::string &line, char d)
 
 void showIpByCondition(std::vector<std::vector<int>> &listOfIps, int indexOfList, int numberOfCondition) {
   const int LAST_INDEX_OF_IP_PART = 3;
-  int sizeOfPool = listOfIps.size();
 
     for(auto& ip : listOfIps) 
     {
@@ -128,8 +127,6 @@ int main()
         // selectionSort(ip_pool);
 
         std::sort(ip_pool.begin(), ip_pool.end(), greaterThen);
-
-        int sizeOfPool = ip_pool.size();
 
         const int LAST_INDEX_OF_IP_PART = 3;
 
